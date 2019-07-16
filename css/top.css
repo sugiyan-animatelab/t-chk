@@ -1,0 +1,17 @@
+.my-parts ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.my-parts ul li a {
+    display: block;
+    text-align: center;
+    padding: .4em .8em;
+    text-decoration: none;
+    background: #fff;
+    color: rgb(51, 51, 51);
+    margin: .2em 0;
+}
+.my-parts ul li a:hover {
+    background: #eee;
+}

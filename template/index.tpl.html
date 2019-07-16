@@ -1,0 +1,32 @@
+<?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: sugisummer
+ * Date: 2018/07/12
+ * Time: 20:43
+ */
+?>
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/top.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h3>長所チェック</h3>
+<p align="center">自分が所属したエリアもしくは記入したい人が所属しているエリアを選択してください</p>
+
+<nav class="my-parts">
+    <ul>
+        <?php
+                            $db = new DBConnect();
+                            $pdo = $db->getDb();
+        $teams = $db->indexTeams($pdo, $team_id);
+        foreach ($teams as $team) {
+        ?>
+        <li><a href="/tchk/<?php print $team['id']; ?>.html"><?php print $team['name']; ?></a></li>
+        <?php } ?>
+    </ul>
+</nav>
+</body>
+</html>

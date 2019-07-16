@@ -1,0 +1,121 @@
+<?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: sugisummer
+ * Date: 2018/07/14
+ * Time: 19:48
+ */
+?>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="utf-8">
+    <meta name="robots" content="index,archive,follow">
+    <link rel="stylesheet" href="/css/style.css">
+    <!--Require JavaScript-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+<body>
+<noscript>当サイトはJavaScriptが有効に設定されていないと正しく表示されません。</noscript>
+</header>
+<div class="messages">
+    <h3>長所チェック(<?php echo $t_name; ?>)</h3>
+    <p>email欄に受信できるメールアドレスを入力すると、メールを受信して内容を確認することができます。</p>
+    <p>スタッフ登録時の名前と正しいメールアドレスを入力しないと提出済みと扱われない場合がありますのでご注意ください。</p>
+    <p>
+        <small>迷惑メール扱いとなり正しく受信できないこともあります。</small>
+    </p>
+
+    <div class="tb-cell mail-form">
+        <form id="form" action="mail.php" method="post">
+            <input type="hidden" name="selected_team" value="<?php echo $t_name; ?>">
+
+            <div class="row">
+                <div class="cell">
+                    <label>スタッフID<br>※不明な方は不明。新人の方は新人と記入してください</label>
+                    <!--cell--></div>
+                <div class="cell">
+                    <input type="text" name="id" required>
+                    <!--cell--></div>
+                <!--row--></div>
+
+            <div class="row">
+                <div class="cell">
+                    <label>所属エリア</label>
+                    <!--cell--></div>
+                <div class="cell">
+                    <SELECT name="team" required>
+                        <OPTION value="">▼選択してください</OPTION>
+                        <?php
+                            $db = new DBConnect();
+                            $pdo = $db->getDb();
+                            $teams = $db->indexTeams($pdo, $team_id);
+                            foreach ($teams as $team) {
+                        ?>
+                        <OPTION value="<?php print $team['name']; ?>"><?php print $team['name']; ?></OPTION>
+                        <?php } ?>
+                    </SELECT><br />
+                    <!--cell--></div>
+                <!--row--></div>
+
+            <div class="row">
+                <div class="cell">
+                    <label>名前（フルネーム）<br>※スタッフ登録時と同じ漢字を使用してください</label>
+                    <!--cell--></div>
+                <div class="cell">
+                    <input type="text" name="name" required>
+                    <!--cell--></div>
+                <!--row--></div>
+
+            <div class="row">
+                <div class="cell">
+                    <label>連絡先email</label>
+                    <!--cell--></div>
+                <div class="cell">
+                    <input type="email" name="email" required>
+                    <!--cell--></div>
+                <!--row--></div>
+            <div class="row">
+                <div class="cell">
+                    <label>上書き希望<br>（再提出の方はこちらにチェック）</label>
+                    <!--cell--></div>
+                <div class="cell">
+                    <input type="checkbox" name="update_flg">
+                    <!--cell--></div>
+                <!--row--></div>
+
+            <?php
+                $members = $db->selectMember2($pdo, $team_id);
+                $count = 0;
+                foreach ($members as $member) {
+                    $count++;
+            ?>
+
+            <div class="row">
+                <div class="cell">
+                    <font size="1px"><label><?php print $member['furigana']; ?></label></font><br>
+                    <label><?php print $member['name']; ?></label>
+                    <!--cell--></div>
+                <div class="cell">
+                    <input type="hidden" name="name<?php print $count; ?>"  value="<?php print $member['name']; ?>">
+                    <textarea name="comment<?php print $count; ?>" ></textarea>
+                </div>
+            </div>
+
+            <?php } ?>
+
+
+            <div class="row">
+                <div class="cell">
+                    &nbsp;
+                    <!--cell--></div>
+                <div class="cell">
+                    <button type="submit" id="sbtn" name="action" value="post">入力内容を確認</button>
+                <footer>
+                </footer>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

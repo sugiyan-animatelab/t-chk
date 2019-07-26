@@ -1,7 +1,6 @@
 .idea
 .idea/*
-tchk
-tchk/*
+tchk/*.html
 const.php
 data
 data/*

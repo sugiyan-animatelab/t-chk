@@ -1,5 +1,5 @@
 <?php
-require(dirname(__FILE__)."/../const.php");
+require("../const.php");
 
 class DBConnect
 {
